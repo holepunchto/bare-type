@@ -105,6 +105,54 @@ done: {
 }
 
 static js_value_t *
+bare_type_add_tag (js_env_t *env, js_callback_info_t *info) {
+  int err;
+
+  size_t argc = 2;
+  js_value_t *argv[2];
+
+  err = js_get_callback_info(env, info, &argc, argv, NULL, NULL);
+  assert(err == 0);
+
+  assert(argc == 2);
+
+  js_type_tag_t *tag;
+  err = js_get_typedarray_info(env, argv[1], NULL, (void **) &tag, NULL, NULL, NULL);
+  assert(err == 0);
+
+  js_add_type_tag(env, argv[0], tag);
+
+  return NULL;
+}
+
+static js_value_t *
+bare_type_check_tag (js_env_t *env, js_callback_info_t *info) {
+  int err;
+
+  size_t argc = 2;
+  js_value_t *argv[2];
+
+  err = js_get_callback_info(env, info, &argc, argv, NULL, NULL);
+  assert(err == 0);
+
+  assert(argc == 2);
+
+  js_type_tag_t *tag;
+  err = js_get_typedarray_info(env, argv[1], NULL, (void **) &tag, NULL, NULL, NULL);
+  assert(err == 0);
+
+  bool matches;
+  err = js_check_type_tag(env, argv[0], tag, &matches);
+  assert(err == 0);
+
+  js_value_t *result;
+  err = js_get_boolean(env, matches, &result);
+  assert(err == 0);
+
+  return result;
+}
+
+static js_value_t *
 bare_type_exports (js_env_t *env, js_value_t *exports) {
   int err;
 
@@ -118,6 +166,8 @@ bare_type_exports (js_env_t *env, js_value_t *exports) {
   }
 
   V("type", bare_type)
+  V("addTag", bare_type_add_tag)
+  V("checkTag", bare_type_check_tag)
 #undef V
 
   js_value_t *constants;

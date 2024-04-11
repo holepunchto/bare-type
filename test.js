@@ -27,3 +27,31 @@ test('number', (t) => {
   t.ok(type(-123).isInt32(), '-123 is int32')
   t.absent(type(-123).isUint32(), '-123 is not uint32')
 })
+
+test('tag', (t) => {
+  const a = type.createTag(1, 2, 3, 4)
+  const b = type.createTag(5, 6, 7, 8)
+
+  const obj = {}
+
+  type.addTag(obj, a)
+
+  t.ok(type.checkTag(obj, a))
+  t.absent(type.checkTag(obj, b))
+})
+
+test('tag, attempt overwrite', (t) => {
+  const a = type.createTag(1, 2, 3, 4)
+  const b = type.createTag(5, 6, 7, 8)
+
+  const obj = {}
+
+  type.addTag(obj, a)
+
+  try {
+    type.addTag(obj, b)
+    t.fail()
+  } catch (err) {
+    t.comment(err.message)
+  }
+})
