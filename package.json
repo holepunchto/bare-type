@@ -27,6 +27,9 @@
     "url": "https://github.com/holepunchto/bare-type/issues"
   },
   "homepage": "https://github.com/holepunchto/bare-type#readme",
+  "engines": {
+    "bare": ">=1.2.0"
+  },
   "devDependencies": {
     "brittle": "^3.4.0",
     "standard": "^17.0.0"
