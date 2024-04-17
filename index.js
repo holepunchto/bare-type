@@ -181,7 +181,24 @@ class Type {
 }
 
 module.exports = exports = function type (value) {
-  return new Type(binding.type(value))
+  switch (typeof value) {
+    case 'undefined':
+      return new Type(t.UNDEFINED)
+    case 'boolean':
+      return new Type(t.BOOLEAN)
+    case 'number':
+      return new Type(Number.isSafeInteger(value) ? binding.type(value) : t.NUMBER)
+    case 'string':
+      return new Type(t.STRING)
+    case 'symbol':
+      return new Type(t.SYMBOL)
+    case 'object':
+      return new Type(value === null ? t.NULL : binding.type(value))
+    case 'function':
+      return new Type(binding.type(value))
+    case 'bigint':
+      return new Type(t.BIGINT)
+  }
 }
 
 exports.createTag = function createTag (...components) {
