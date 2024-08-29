@@ -1,6 +1,6 @@
 {
   "name": "bare-type",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Cross-realm type predicates for Bare",
   "exports": {
     ".": "./index.js",
