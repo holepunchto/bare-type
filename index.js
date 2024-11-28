@@ -3,191 +3,199 @@ const binding = require('./binding')
 const t = binding.constants
 
 class Type {
-  constructor (type) {
+  constructor(type) {
     this._type = type
   }
 
-  isUndefined () {
+  isUndefined() {
     return this._type === t.UNDEFINED
   }
 
-  isNull () {
+  isNull() {
     return this._type === t.NULL
   }
 
-  isBoolean () {
+  isBoolean() {
     return this._type === t.BOOLEAN
   }
 
-  isNumber () {
+  isNumber() {
     return (this._type & 0xff) === t.NUMBER
   }
 
-  isInt32 () {
+  isInt32() {
     return (this._type & (0xff | t.INT32)) === (t.NUMBER | t.INT32)
   }
 
-  isUint32 () {
+  isUint32() {
     return (this._type & (0xff | t.UINT32)) === (t.NUMBER | t.UINT32)
   }
 
-  isString () {
+  isString() {
     return this._type === t.STRING
   }
 
-  isSymbol () {
+  isSymbol() {
     return this._type === t.SYMBOL
   }
 
-  isObject () {
+  isObject() {
     return (this._type & 0xff) === t.OBJECT
   }
 
-  isArray () {
+  isArray() {
     return this._type === (t.OBJECT | t.ARRAY)
   }
 
-  isArguments () {
+  isArguments() {
     return this._type === (t.OBJECT | t.ARGUMENTS)
   }
 
-  isDate () {
+  isDate() {
     return this._type === (t.OBJECT | t.DATE)
   }
 
-  isRegExp () {
+  isRegExp() {
     return this._type === (t.OBJECT | t.REGEXP)
   }
 
-  isError () {
+  isError() {
     return this._type === (t.OBJECT | t.ERROR)
   }
 
-  isPromise () {
+  isPromise() {
     return this._type === (t.OBJECT | t.PROMISE)
   }
 
-  isProxy () {
+  isProxy() {
     return this._type === (t.OBJECT | t.PROXY)
   }
 
-  isGenerator () {
+  isGenerator() {
     return this._type === (t.OBJECT | t.GENERATOR)
   }
 
-  isMap () {
+  isMap() {
     return this._type === (t.OBJECT | t.MAP)
   }
 
-  isSet () {
+  isSet() {
     return this._type === (t.OBJECT | t.SET)
   }
 
-  isWeakMap () {
+  isWeakMap() {
     return this._type === (t.OBJECT | t.WEAK_MAP)
   }
 
-  isWeakSet () {
+  isWeakSet() {
     return this._type === (t.OBJECT | t.WEAK_SET)
   }
 
-  isWeakRef () {
+  isWeakRef() {
     return this._type === (t.OBJECT | t.WEAK_REF)
   }
 
-  isArrayBuffer () {
+  isArrayBuffer() {
     return this._type === (t.OBJECT | t.ARRAYBUFFER)
   }
 
-  isSharedArrayBuffer () {
+  isSharedArrayBuffer() {
     return this._type === (t.OBJECT | t.SHAREDARRAYBUFFER)
   }
 
-  isTypedArray () {
+  isTypedArray() {
     return (this._type & 0xffff) === (t.OBJECT | t.TYPEDARRAY)
   }
 
-  isInt8Array () {
+  isInt8Array() {
     return this._type === (t.OBJECT | t.TYPEDARRAY | t.INT8ARRAY)
   }
 
-  isUint8Array () {
+  isUint8Array() {
     return this._type === (t.OBJECT | t.TYPEDARRAY | t.UINT8ARRAY)
   }
 
-  isUint8ClampedArray () {
+  isUint8ClampedArray() {
     return this._type === (t.OBJECT | t.TYPEDARRAY | t.UINT8CLAMPEDARRAY)
   }
 
-  isInt16Array () {
+  isInt16Array() {
     return this._type === (t.OBJECT | t.TYPEDARRAY | t.INT16ARRAY)
   }
 
-  isUint16Array () {
+  isUint16Array() {
     return this._type === (t.OBJECT | t.TYPEDARRAY | t.UINT16ARRAY)
   }
 
-  isInt32Array () {
+  isInt32Array() {
     return this._type === (t.OBJECT | t.TYPEDARRAY | t.INT32ARRAY)
   }
 
-  isUint32Array () {
+  isUint32Array() {
     return this._type === (t.OBJECT | t.TYPEDARRAY | t.UINT32ARRAY)
   }
 
-  isFloat32Array () {
+  isFloat32Array() {
     return this._type === (t.OBJECT | t.TYPEDARRAY | t.FLOAT32ARRAY)
   }
 
-  isFloat64Array () {
+  isFloat64Array() {
     return this._type === (t.OBJECT | t.TYPEDARRAY | t.FLOAT64ARRAY)
   }
 
-  isBigInt64Array () {
+  isBigInt64Array() {
     return this._type === (t.OBJECT | t.TYPEDARRAY | t.BIGINT64ARRAY)
   }
 
-  isBigUint64Array () {
+  isBigUint64Array() {
     return this._type === (t.OBJECT | t.TYPEDARRAY | t.BIGUINT64ARRAY)
   }
 
-  isDataView () {
+  isDataView() {
     return this._type === (t.OBJECT | t.DATAVIEW)
   }
 
-  isModuleNamespace () {
+  isModuleNamespace() {
     return this._type === (t.OBJECT | t.MODULE_NAMESPACE)
   }
 
-  isFunction () {
+  isFunction() {
     return (this._type & 0xff) === t.FUNCTION
   }
 
-  isAsyncFunction () {
-    return (this._type & (0xff | t.ASYNC_FUNCTION)) === (t.FUNCTION | t.ASYNC_FUNCTION)
+  isAsyncFunction() {
+    return (
+      (this._type & (0xff | t.ASYNC_FUNCTION)) ===
+      (t.FUNCTION | t.ASYNC_FUNCTION)
+    )
   }
 
-  isGeneratorFunction () {
-    return (this._type & (0xff | t.GENERATOR_FUNCTION)) === (t.FUNCTION | t.GENERATOR_FUNCTION)
+  isGeneratorFunction() {
+    return (
+      (this._type & (0xff | t.GENERATOR_FUNCTION)) ===
+      (t.FUNCTION | t.GENERATOR_FUNCTION)
+    )
   }
 
-  isExternal () {
+  isExternal() {
     return this._type === t.EXTERNAL
   }
 
-  isBigInt () {
+  isBigInt() {
     return this._type === t.BIGINT
   }
 }
 
-module.exports = exports = function type (value) {
+module.exports = exports = function type(value) {
   switch (typeof value) {
     case 'undefined':
       return new Type(t.UNDEFINED)
     case 'boolean':
       return new Type(t.BOOLEAN)
     case 'number':
-      return new Type(Number.isSafeInteger(value) ? binding.type(value) : t.NUMBER)
+      return new Type(
+        Number.isSafeInteger(value) ? binding.type(value) : t.NUMBER
+      )
     case 'string':
       return new Type(t.STRING)
     case 'symbol':
@@ -201,16 +209,16 @@ module.exports = exports = function type (value) {
   }
 }
 
-exports.createTag = function createTag (...components) {
+exports.createTag = function createTag(...components) {
   const tag = new Uint32Array(4)
   for (let i = 0; i < 4; i++) tag[i] = components[i] || 0
   return tag
 }
 
-exports.addTag = function addTag (object, tag) {
+exports.addTag = function addTag(object, tag) {
   binding.addTag(object, tag)
 }
 
-exports.checkTag = function checkTag (object, tag) {
+exports.checkTag = function checkTag(object, tag) {
   return binding.checkTag(object, tag)
 }

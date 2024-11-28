@@ -60,7 +60,7 @@ typedef enum {
 } bare_type_t;
 
 static js_value_t *
-bare_type (js_env_t *env, js_callback_info_t *info) {
+bare_type(js_env_t *env, js_callback_info_t *info) {
   int err;
 
   size_t argc = 1;
@@ -176,7 +176,7 @@ bare_type (js_env_t *env, js_callback_info_t *info) {
 }
 
 static js_value_t *
-bare_type_add_tag (js_env_t *env, js_callback_info_t *info) {
+bare_type_add_tag(js_env_t *env, js_callback_info_t *info) {
   int err;
 
   size_t argc = 2;
@@ -197,7 +197,7 @@ bare_type_add_tag (js_env_t *env, js_callback_info_t *info) {
 }
 
 static js_value_t *
-bare_type_check_tag (js_env_t *env, js_callback_info_t *info) {
+bare_type_check_tag(js_env_t *env, js_callback_info_t *info) {
   int err;
 
   size_t argc = 2;
@@ -224,7 +224,7 @@ bare_type_check_tag (js_env_t *env, js_callback_info_t *info) {
 }
 
 static js_value_t *
-bare_type_exports (js_env_t *env, js_value_t *exports) {
+bare_type_exports(js_env_t *env, js_value_t *exports) {
   int err;
 
 #define V(name, fn) \
