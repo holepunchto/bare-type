@@ -265,6 +265,7 @@ bare_type_exports (js_env_t *env, js_value_t *exports) {
   V("SYMBOL", bare_type_symbol)
   V("OBJECT", bare_type_object)
   V("FUNCTION", bare_type_function)
+  V("EXTERNAL", bare_type_external)
   V("BIGINT", bare_type_bigint)
 
   V("INT32", bare_type_int32)
