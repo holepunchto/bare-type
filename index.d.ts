@@ -1,5 +1,5 @@
 declare class Type {
-  constructor(type: unknown)
+  constructor(type: number)
 
   isUndefined(): boolean
 
@@ -93,9 +93,9 @@ declare function type(value: unknown): Type
 declare namespace type {
   export function createTag(...components: number[]): Uint32Array
 
-  export function addTag(object: {}, tag: Uint32Array): void
+  export function addTag(object: object, tag: Uint32Array): void
 
-  export function checkTag(object: {}, tag: Uint32Array): boolean
+  export function checkTag(object: object, tag: Uint32Array): boolean
 }
 
 export = type
