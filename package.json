@@ -1,6 +1,6 @@
 {
   "name": "bare-type",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Cross-realm type predicates for Bare",
   "exports": {
     ".": {
