@@ -49,6 +49,7 @@ typedef enum {
   bare_type_uint16array = 5 << 16,
   bare_type_int32array = 6 << 16,
   bare_type_uint32array = 7 << 16,
+  bare_type_float16array = 12 << 16,
   bare_type_float32array = 8 << 16,
   bare_type_float64array = 9 << 16,
   bare_type_bigint64array = 10 << 16,
@@ -158,6 +159,7 @@ bare_type(js_env_t *env, js_callback_info_t *info) {
     V(uint16array)
     V(int32array)
     V(uint32array)
+    V(float16array)
     V(float32array)
     V(float64array)
     V(bigint64array)
@@ -297,6 +299,7 @@ bare_type_exports(js_env_t *env, js_value_t *exports) {
   V("UINT16ARRAY", bare_type_uint16array)
   V("INT32ARRAY", bare_type_int32array)
   V("UINT32ARRAY", bare_type_uint32array)
+  V("FLOAT16ARRAY", bare_type_float16array)
   V("FLOAT32ARRAY", bare_type_float32array)
   V("FLOAT64ARRAY", bare_type_float64array)
   V("BIGINT64ARRAY", bare_type_bigint64array)

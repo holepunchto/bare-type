@@ -135,6 +135,10 @@ class Type {
     return this._type === (t.OBJECT | t.TYPEDARRAY | t.UINT32ARRAY)
   }
 
+  isFloat16Array() {
+    return this._type === (t.OBJECT | t.TYPEDARRAY | t.FLOAT16ARRAY)
+  }
+
   isFloat32Array() {
     return this._type === (t.OBJECT | t.TYPEDARRAY | t.FLOAT32ARRAY)
   }
