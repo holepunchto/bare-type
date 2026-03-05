@@ -77,10 +77,7 @@ test('promise', (t) => {
   t.ok(type(new Promise(noop)).isPromise(), 'Promise() is promise')
 
   t.ok(type(Promise.resolve()).isPromise(), 'Promise.resolve() is promise')
-  t.ok(
-    type(Promise.reject(new Error()).catch(noop)).isPromise(),
-    'Promise.reject() is promise'
-  )
+  t.ok(type(Promise.reject(new Error()).catch(noop)).isPromise(), 'Promise.reject() is promise')
 })
 
 test('proxy', (t) => {
@@ -122,10 +119,7 @@ test('weak ref', (t) => {
 
 test('arraybuffer', (t) => {
   t.ok(type(new ArrayBuffer(16)).isObject(), 'ArrayBuffer() is object')
-  t.ok(
-    type(new ArrayBuffer(16)).isArrayBuffer(),
-    'ArrayBuffer() is arraybuffer'
-  )
+  t.ok(type(new ArrayBuffer(16)).isArrayBuffer(), 'ArrayBuffer() is arraybuffer')
 })
 
 test('sharedarraybuffer', (t) => {
@@ -147,14 +141,8 @@ test('typedarray', (t) => {
 })
 
 test('dataview', (t) => {
-  t.ok(
-    type(new DataView(new ArrayBuffer(16))).isObject(),
-    'DataView() is object'
-  )
-  t.ok(
-    type(new DataView(new ArrayBuffer(16))).isDataView(),
-    'DataView() is dataview'
-  )
+  t.ok(type(new DataView(new ArrayBuffer(16))).isObject(), 'DataView() is object')
+  t.ok(type(new DataView(new ArrayBuffer(16))).isDataView(), 'DataView() is dataview')
 })
 
 test('function', (t) => {
@@ -162,23 +150,11 @@ test('function', (t) => {
   t.ok(type(() => {}).isFunction(), '()=>{} is function')
 
   t.ok(type(function* () {}).isFunction(), 'function*(){} is function')
-  t.ok(
-    type(function* () {}).isGeneratorFunction(),
-    'function*(){} is generator function'
-  )
-  t.absent(
-    type(function* () {}).isAsyncFunction(),
-    'function*(){} is not async function'
-  )
+  t.ok(type(function* () {}).isGeneratorFunction(), 'function*(){} is generator function')
+  t.absent(type(function* () {}).isAsyncFunction(), 'function*(){} is not async function')
 
-  t.ok(
-    type(async function () {}).isFunction(),
-    'async function(){} is function'
-  )
-  t.ok(
-    type(async function () {}).isAsyncFunction(),
-    'async function(){} is async function'
-  )
+  t.ok(type(async function () {}).isFunction(), 'async function(){} is function')
+  t.ok(type(async function () {}).isAsyncFunction(), 'async function(){} is async function')
   t.absent(
     type(async function () {}).isGeneratorFunction(),
     'async function(){} is not generator function'
@@ -186,19 +162,10 @@ test('function', (t) => {
 
   t.ok(type(async () => {}).isFunction(), 'async ()=>{} is function')
   t.ok(type(async () => {}).isAsyncFunction(), 'async ()=>{} is async function')
-  t.absent(
-    type(async () => {}).isGeneratorFunction(),
-    'async ()=>{} is not generator function'
-  )
+  t.absent(type(async () => {}).isGeneratorFunction(), 'async ()=>{} is not generator function')
 
-  t.ok(
-    type(async function* () {}).isFunction(),
-    'async function*(){} is function'
-  )
-  t.ok(
-    type(async function* () {}).isAsyncFunction(),
-    'async function*(){} is async function'
-  )
+  t.ok(type(async function* () {}).isFunction(), 'async function*(){} is function')
+  t.ok(type(async function* () {}).isAsyncFunction(), 'async function*(){} is async function')
   t.ok(
     type(async function* () {}).isGeneratorFunction(),
     'async function*(){} is generator function'

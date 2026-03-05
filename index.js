@@ -168,17 +168,11 @@ class Type {
   }
 
   isAsyncFunction() {
-    return (
-      (this._type & (0xff | t.ASYNC_FUNCTION)) ===
-      (t.FUNCTION | t.ASYNC_FUNCTION)
-    )
+    return (this._type & (0xff | t.ASYNC_FUNCTION)) === (t.FUNCTION | t.ASYNC_FUNCTION)
   }
 
   isGeneratorFunction() {
-    return (
-      (this._type & (0xff | t.GENERATOR_FUNCTION)) ===
-      (t.FUNCTION | t.GENERATOR_FUNCTION)
-    )
+    return (this._type & (0xff | t.GENERATOR_FUNCTION)) === (t.FUNCTION | t.GENERATOR_FUNCTION)
   }
 
   isExternal() {
@@ -197,9 +191,7 @@ module.exports = exports = function type(value) {
     case 'boolean':
       return new Type(t.BOOLEAN)
     case 'number':
-      return new Type(
-        Number.isSafeInteger(value) ? binding.type(value) : t.NUMBER
-      )
+      return new Type(Number.isSafeInteger(value) ? binding.type(value) : t.NUMBER)
     case 'string':
       return new Type(t.STRING)
     case 'symbol':
