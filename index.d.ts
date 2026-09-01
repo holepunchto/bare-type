@@ -51,12 +51,4 @@ declare class Type {
 
 declare function type(value: unknown): Type
 
-declare namespace type {
-  export function createTag(...components: number[]): Uint32Array
-
-  export function addTag(object: object, tag: Uint32Array): void
-
-  export function checkTag(object: object, tag: Uint32Array): boolean
-}
-
 export = type
