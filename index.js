@@ -184,14 +184,31 @@ class Type {
   }
 }
 
-module.exports = exports = function type(value) {
+// Classifies a number the way the engine does, but without crossing into the
+// addon. A number is an `int32` or a `uint32` if it is an integer within the
+// respective range, with negative zero being representable as neither.
+function numberType(value) {
+  if (!Number.isInteger(value)) return t.NUMBER
+
+  // Negative zero passes both range checks below, so exclude it up front.
+  if (value === 0 && 1 / value < 0) return t.NUMBER
+
+  let type = t.NUMBER
+
+  if (value >= -0x80000000 && value <= 0x7fffffff) type |= t.INT32
+  if (value >= 0 && value <= 0xffffffff) type |= t.UINT32
+
+  return type
+}
+
+module.exports = function type(value) {
   switch (typeof value) {
     case 'undefined':
       return new Type(t.UNDEFINED)
     case 'boolean':
       return new Type(t.BOOLEAN)
     case 'number':
-      return new Type(Number.isSafeInteger(value) ? binding.type(value) : t.NUMBER)
+      return new Type(numberType(value))
     case 'string':
       return new Type(t.STRING)
     case 'symbol':
@@ -203,18 +220,4 @@ module.exports = exports = function type(value) {
     case 'bigint':
       return new Type(t.BIGINT)
   }
-}
-
-exports.createTag = function createTag(...components) {
-  const tag = new Uint32Array(4)
-  for (let i = 0; i < 4; i++) tag[i] = components[i] || 0
-  return tag
-}
-
-exports.addTag = function addTag(object, tag) {
-  binding.addTag(object, tag)
-}
-
-exports.checkTag = function checkTag(object, tag) {
-  return binding.checkTag(object, tag)
 }

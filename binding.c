@@ -2,7 +2,6 @@
 #include <bare.h>
 #include <js.h>
 #include <stdint.h>
-#include <utf.h>
 
 typedef enum {
   // Base types
@@ -60,23 +59,15 @@ typedef enum {
   bare_type_generator_function = 1 << 9,
 } bare_type_t;
 
-static js_value_t *
-bare_type(js_env_t *env, js_callback_info_t *info) {
+static inline uint32_t
+bare_type_classify(js_env_t *env, js_value_t *value) {
   int err;
 
-  size_t argc = 1;
-  js_value_t *argv[1];
-
-  err = js_get_callback_info(env, info, &argc, argv, NULL, NULL);
+  js_value_type_t base;
+  err = js_typeof(env, value, &base);
   assert(err == 0);
 
-  assert(argc == 1);
-
-  js_value_t *value = argv[0];
-
-  uint32_t type;
-  err = js_typeof(env, value, (js_value_type_t *) &type);
-  assert(err == 0);
+  uint32_t type = base;
 
   switch (type) {
   case bare_type_number: {
@@ -104,22 +95,22 @@ bare_type(js_env_t *env, js_callback_info_t *info) {
   }
 
     V(array)
-    V(arguments)
+    V(typedarray)
     V(date)
-    V(regexp)
-    V(error)
-    V(promise)
-    V(proxy)
-    V(generator)
     V(map)
     V(set)
+    V(regexp)
+    V(error)
+    V(arraybuffer)
+    V(dataview)
+    V(promise)
+    V(proxy)
+    V(sharedarraybuffer)
+    V(arguments)
+    V(generator)
     V(weak_map)
     V(weak_set)
     V(weak_ref)
-    V(arraybuffer)
-    V(sharedarraybuffer)
-    V(typedarray)
-    V(dataview)
     V(module_namespace)
 #undef V
 
@@ -141,107 +132,104 @@ bare_type(js_env_t *env, js_callback_info_t *info) {
   }
   }
 
-  switch (type) {
-  case bare_type_object | bare_type_typedarray: {
-#define V(t) \
-  bool is_##t; \
-  err = js_is_##t(env, value, &is_##t); \
-  assert(err == 0); \
-  if (is_##t) { \
-    type |= bare_type_##t; \
-    break; \
+  if (type == (bare_type_object | bare_type_typedarray)) {
+    js_typedarray_type_t element = (js_typedarray_type_t) -1;
+    err = js_get_typedarray_info(env, value, &element, NULL, NULL, NULL, NULL);
+    assert(err == 0);
+
+    switch (element) {
+    case js_int8array:
+      type |= bare_type_int8array;
+      break;
+    case js_uint8array:
+      type |= bare_type_uint8array;
+      break;
+    case js_uint8clampedarray:
+      type |= bare_type_uint8clampedarray;
+      break;
+    case js_int16array:
+      type |= bare_type_int16array;
+      break;
+    case js_uint16array:
+      type |= bare_type_uint16array;
+      break;
+    case js_int32array:
+      type |= bare_type_int32array;
+      break;
+    case js_uint32array:
+      type |= bare_type_uint32array;
+      break;
+    case js_float16array:
+      type |= bare_type_float16array;
+      break;
+    case js_float32array:
+      type |= bare_type_float32array;
+      break;
+    case js_float64array:
+      type |= bare_type_float64array;
+      break;
+    case js_bigint64array:
+      type |= bare_type_bigint64array;
+      break;
+    case js_biguint64array:
+      type |= bare_type_biguint64array;
+      break;
+    default:
+      break;
+    }
   }
 
-    V(int8array)
-    V(uint8array)
-    V(uint8clampedarray)
-    V(int16array)
-    V(uint16array)
-    V(int32array)
-    V(uint32array)
-    V(float16array)
-    V(float32array)
-    V(float64array)
-    V(bigint64array)
-    V(biguint64array)
-#undef V
+  return type;
+}
 
-    break;
-  }
-  }
+static js_value_t *
+bare_type(js_env_t *env, js_callback_info_t *info) {
+  int err;
+
+  size_t argc = 1;
+  js_value_t *argv[1];
+
+  err = js_get_callback_info(env, info, &argc, argv, NULL, NULL);
+  assert(err == 0);
 
   js_value_t *result;
-  err = js_create_uint32(env, type, &result);
+  err = js_create_uint32(env, bare_type_classify(env, argv[0]), &result);
   assert(err == 0);
 
   return result;
 }
 
-static js_value_t *
-bare_type_add_tag(js_env_t *env, js_callback_info_t *info) {
+static uint32_t
+bare_type_typed(js_value_t *receiver, js_value_t *value, js_typed_callback_info_t *info) {
   int err;
 
-  size_t argc = 2;
-  js_value_t *argv[2];
-
-  err = js_get_callback_info(env, info, &argc, argv, NULL, NULL);
+  js_env_t *env;
+  err = js_get_typed_callback_info(info, &env, NULL);
   assert(err == 0);
 
-  assert(argc == 2);
-
-  js_type_tag_t *tag;
-  err = js_get_typedarray_info(env, argv[1], NULL, (void **) &tag, NULL, NULL, NULL);
-  assert(err == 0);
-
-  js_add_type_tag(env, argv[0], tag);
-
-  return NULL;
-}
-
-static js_value_t *
-bare_type_check_tag(js_env_t *env, js_callback_info_t *info) {
-  int err;
-
-  size_t argc = 2;
-  js_value_t *argv[2];
-
-  err = js_get_callback_info(env, info, &argc, argv, NULL, NULL);
-  assert(err == 0);
-
-  assert(argc == 2);
-
-  js_type_tag_t *tag;
-  err = js_get_typedarray_info(env, argv[1], NULL, (void **) &tag, NULL, NULL, NULL);
-  assert(err == 0);
-
-  bool matches;
-  err = js_check_type_tag(env, argv[0], tag, &matches);
-  assert(err == 0);
-
-  js_value_t *result;
-  err = js_get_boolean(env, matches, &result);
-  assert(err == 0);
-
-  return result;
+  return bare_type_classify(env, value);
 }
 
 static js_value_t *
 bare_type_exports(js_env_t *env, js_value_t *exports) {
   int err;
 
-#define V(name, fn) \
-  { \
-    js_value_t *val; \
-    err = js_create_function(env, name, -1, fn, NULL, &val); \
-    assert(err == 0); \
-    err = js_set_named_property(env, exports, name, val); \
-    assert(err == 0); \
-  }
+  js_callback_signature_t signature = {
+    .version = 0,
+    .result = js_uint32,
+    .args_len = 2,
+    .args = (int[]){
+      js_object,
+      js_object,
+    },
+  };
 
-  V("type", bare_type)
-  V("addTag", bare_type_add_tag)
-  V("checkTag", bare_type_check_tag)
-#undef V
+  js_value_t *fn;
+  err = js_create_typed_function(env, "type", -1, bare_type, &signature, bare_type_typed, NULL, &fn);
+  assert(err == 0);
+
+  err = js_set_named_property(env, exports, "type", fn);
+  assert(err == 0);
 
   js_value_t *constants;
   err = js_create_object(env, &constants);
