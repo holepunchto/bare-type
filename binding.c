@@ -21,24 +21,24 @@ typedef enum {
   bare_type_uint32 = 1 << 9,
 
   // Object types
-  bare_type_array = 1 << 8,
-  bare_type_arguments = 2 << 8,
-  bare_type_date = 3 << 8,
-  bare_type_regexp = 4 << 8,
-  bare_type_error = 5 << 8,
-  bare_type_promise = 6 << 8,
-  bare_type_proxy = 7 << 8,
-  bare_type_generator = 8 << 8,
-  bare_type_map = 9 << 8,
-  bare_type_set = 10 << 8,
-  bare_type_weak_map = 11 << 8,
-  bare_type_weak_set = 12 << 8,
-  bare_type_weak_ref = 13 << 8,
-  bare_type_arraybuffer = 14 << 8,
-  bare_type_sharedarraybuffer = 15 << 8,
-  bare_type_typedarray = 16 << 8,
-  bare_type_dataview = 17 << 8,
-  bare_type_module_namespace = 18 << 8,
+  bare_type_array = js_array,
+  bare_type_arguments = js_arguments,
+  bare_type_date = js_date,
+  bare_type_regexp = js_regexp,
+  bare_type_error = js_error,
+  bare_type_promise = js_promise,
+  bare_type_proxy = js_proxy,
+  bare_type_generator = js_generator,
+  bare_type_map = js_map,
+  bare_type_set = js_set,
+  bare_type_weak_map = js_weak_map,
+  bare_type_weak_set = js_weak_set,
+  bare_type_weak_ref = js_weak_ref,
+  bare_type_arraybuffer = js_arraybuffer,
+  bare_type_sharedarraybuffer = js_sharedarraybuffer,
+  bare_type_typedarray = js_typedarray,
+  bare_type_dataview = js_dataview,
+  bare_type_module_namespace = js_module_namespace,
 
   // TypedArray types
   bare_type_int8array = 1 << 16,
@@ -85,35 +85,11 @@ bare_type_classify(js_env_t *env, js_value_t *value) {
   }
 
   case bare_type_object: {
-#define V(t) \
-  bool is_##t; \
-  err = js_is_##t(env, value, &is_##t); \
-  assert(err == 0); \
-  if (is_##t) { \
-    type |= bare_type_##t; \
-    break; \
-  }
+    js_object_type_t object;
+    err = js_get_object_type(env, value, &object);
+    assert(err == 0);
 
-    V(array)
-    V(typedarray)
-    V(date)
-    V(map)
-    V(set)
-    V(regexp)
-    V(error)
-    V(arraybuffer)
-    V(dataview)
-    V(promise)
-    V(proxy)
-    V(sharedarraybuffer)
-    V(arguments)
-    V(generator)
-    V(weak_map)
-    V(weak_set)
-    V(weak_ref)
-    V(module_namespace)
-#undef V
-
+    type = object;
     break;
   }
 
