@@ -145,6 +145,36 @@ test('dataview', (t) => {
   t.ok(type(new DataView(new ArrayBuffer(16))).isDataView(), 'DataView() is dataview')
 })
 
+test('boolean object', (t) => {
+  t.ok(type(new Boolean(true)).isObject(), 'Boolean() is object')
+  t.ok(type(new Boolean(true)).isBooleanObject(), 'Boolean() is boolean object')
+  t.absent(type(true).isBooleanObject(), 'true is not boolean object')
+})
+
+test('number object', (t) => {
+  t.ok(type(new Number(123)).isObject(), 'Number() is object')
+  t.ok(type(new Number(123)).isNumberObject(), 'Number() is number object')
+  t.absent(type(123).isNumberObject(), '123 is not number object')
+})
+
+test('string object', (t) => {
+  t.ok(type(new String('hello')).isObject(), 'String() is object')
+  t.ok(type(new String('hello')).isStringObject(), 'String() is string object')
+  t.absent(type('hello').isStringObject(), "'hello' is not string object")
+})
+
+test('symbol object', (t) => {
+  t.ok(type(Object(Symbol('foo'))).isObject(), 'Object(Symbol()) is object')
+  t.ok(type(Object(Symbol('foo'))).isSymbolObject(), 'Object(Symbol()) is symbol object')
+  t.absent(type(Symbol('foo')).isSymbolObject(), "Symbol('foo') is not symbol object")
+})
+
+test('bigint object', (t) => {
+  t.ok(type(Object(1234n)).isObject(), 'Object(1234n) is object')
+  t.ok(type(Object(1234n)).isBigIntObject(), 'Object(1234n) is bigint object')
+  t.absent(type(1234n).isBigIntObject(), '1234n is not bigint object')
+})
+
 test('function', (t) => {
   t.ok(type(function () {}).isFunction(), 'function(){} is function')
   t.ok(type(() => {}).isFunction(), '()=>{} is function')

@@ -39,6 +39,11 @@ typedef enum {
   bare_type_typedarray = js_typedarray,
   bare_type_dataview = js_dataview,
   bare_type_module_namespace = js_module_namespace,
+  bare_type_boolean_object = js_boolean_object,
+  bare_type_number_object = js_number_object,
+  bare_type_string_object = js_string_object,
+  bare_type_symbol_object = js_symbol_object,
+  bare_type_bigint_object = js_bigint_object,
 
   // TypedArray types
   bare_type_int8array = 1 << 16,
@@ -255,6 +260,11 @@ bare_type_exports(js_env_t *env, js_value_t *exports) {
   V("TYPEDARRAY", bare_type_typedarray)
   V("DATAVIEW", bare_type_dataview)
   V("MODULE_NAMESPACE", bare_type_module_namespace)
+  V("BOOLEAN_OBJECT", bare_type_boolean_object)
+  V("NUMBER_OBJECT", bare_type_number_object)
+  V("STRING_OBJECT", bare_type_string_object)
+  V("SYMBOL_OBJECT", bare_type_symbol_object)
+  V("BIGINT_OBJECT", bare_type_bigint_object)
 
   V("INT8ARRAY", bare_type_int8array)
   V("UINT8ARRAY", bare_type_uint8array)

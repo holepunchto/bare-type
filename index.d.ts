@@ -38,6 +38,11 @@ interface Type {
   isBigUint64Array(): boolean
   isDataView(): boolean
   isModuleNamespace(): boolean
+  isBooleanObject(): boolean
+  isNumberObject(): boolean
+  isStringObject(): boolean
+  isSymbolObject(): boolean
+  isBigIntObject(): boolean
   isFunction(): boolean
   isAsyncFunction(): boolean
   isGeneratorFunction(): boolean
