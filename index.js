@@ -163,6 +163,26 @@ class Type {
     return this._type === (t.OBJECT | t.MODULE_NAMESPACE)
   }
 
+  isBooleanObject() {
+    return this._type === (t.OBJECT | t.BOOLEAN_OBJECT)
+  }
+
+  isNumberObject() {
+    return this._type === (t.OBJECT | t.NUMBER_OBJECT)
+  }
+
+  isStringObject() {
+    return this._type === (t.OBJECT | t.STRING_OBJECT)
+  }
+
+  isSymbolObject() {
+    return this._type === (t.OBJECT | t.SYMBOL_OBJECT)
+  }
+
+  isBigIntObject() {
+    return this._type === (t.OBJECT | t.BIGINT_OBJECT)
+  }
+
   isFunction() {
     return (this._type & 0xff) === t.FUNCTION
   }
