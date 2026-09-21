@@ -175,6 +175,20 @@ test('bigint object', (t) => {
   t.absent(type(1234n).isBigIntObject(), '1234n is not bigint object')
 })
 
+test.solo('boxed primitives, sanity check', (t) => {
+  t.absent(type(new Boolean(true)).isNumberObject())
+  t.absent(type(new Number(123)).isStringObject())
+  t.absent(type(new String('hello')).isSymbolObject())
+  t.absent(type(Object(Symbol('foo'))).isBigIntObject())
+  t.absent(type(Object(1234n)).isBooleanObject())
+
+  t.absent(type({}).isBooleanObject())
+  t.absent(type({}).isNumberObject())
+  t.absent(type({}).isStringObject())
+  t.absent(type({}).isSymbolObject())
+  t.absent(type({}).isBigIntObject())
+})
+
 test('function', (t) => {
   t.ok(type(function () {}).isFunction(), 'function(){} is function')
   t.ok(type(() => {}).isFunction(), '()=>{} is function')
