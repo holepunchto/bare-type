@@ -16,6 +16,23 @@ if (type(123).isNumber()) {
 }
 ```
 
+To test a value against many types at once, switch on `type.of()` rather than walking the predicates. Every constant carries its base type, so each one matches outright:
+
+```js
+const type = require('bare-type')
+
+const { ARRAY, DATE, MAP } = type.constants
+
+switch (type.of(value)) {
+  case ARRAY:
+    return value.length
+  case DATE:
+    return value.getTime()
+  case MAP:
+    return value.size
+}
+```
+
 ## API
 
 See the [`bare-type` reference](https://docs.pears.com/reference/bare/modules/bare-type).

@@ -211,4 +211,71 @@ test('bigint', (t) => {
   t.ok(type(BigInt(1234)).isBigInt(), 'BigInt() is bigint')
 })
 
+test('of', (t) => {
+  const c = type.constants
+
+  t.is(type.of(undefined), c.UNDEFINED, 'undefined')
+  t.is(type.of(null), c.NULL, 'null')
+  t.is(type.of(true), c.BOOLEAN, 'boolean')
+  t.is(type.of('hello'), c.STRING, 'string')
+  t.is(type.of(0n), c.BIGINT, 'bigint')
+  t.is(type.of({}), c.OBJECT, 'object')
+  t.is(type.of([]), c.ARRAY, 'array')
+  t.is(type.of(new Date()), c.DATE, 'date')
+  t.is(type.of(/a/), c.REGEXP, 'regexp')
+  t.is(type.of(new Map()), c.MAP, 'map')
+  t.is(type.of(new Set()), c.SET, 'set')
+  t.is(type.of(new ArrayBuffer(0)), c.ARRAYBUFFER, 'arraybuffer')
+  t.is(type.of(new DataView(new ArrayBuffer(0))), c.DATAVIEW, 'dataview')
+  t.is(type.of(noop), c.FUNCTION, 'function')
+
+  t.is(type.of(0), c.NUMBER | c.INT32 | c.UINT32, 'number carries its flags')
+  t.is(type.of(12.3), c.NUMBER, 'double is only a number')
+
+  t.is(type.of(new Uint8Array(0)), c.TYPEDARRAY | c.UINT8ARRAY, 'typedarray carries its view type')
+  t.is(
+    type.of(new Uint8Array(0)) & 0xffff,
+    c.TYPEDARRAY,
+    'typedarray is recognisable without its view type'
+  )
+})
+
+test('of sees through proxies', (t) => {
+  t.is(type.of(new Proxy([], {})), type.constants.PROXY, 'proxy of array is a proxy')
+  t.is(type.of(new Proxy({}, {})), type.constants.PROXY, 'proxy of object is a proxy')
+})
+
+test('of agrees with the predicates', (t) => {
+  const values = [
+    undefined,
+    null,
+    true,
+    123,
+    12.3,
+    'hello',
+    Symbol('foo'),
+    0n,
+    {},
+    [],
+    new Date(),
+    /a/,
+    new Error(),
+    new Map(),
+    new Set(),
+    new WeakMap(),
+    new WeakRef({}),
+    new ArrayBuffer(0),
+    new Uint8Array(0),
+    new DataView(new ArrayBuffer(0)),
+    new Proxy({}, {}),
+    Promise.resolve(),
+    noop,
+    async () => {}
+  ]
+
+  for (const value of values) {
+    t.is(type(value)._type, type.of(value), 'of() matches the wrapped type')
+  }
+})
+
 function noop() {}
