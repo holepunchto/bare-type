@@ -221,23 +221,31 @@ function numberType(value) {
   return type
 }
 
-module.exports = function type(value) {
+function of(value) {
   switch (typeof value) {
     case 'undefined':
-      return new Type(t.UNDEFINED)
+      return t.UNDEFINED
     case 'boolean':
-      return new Type(t.BOOLEAN)
+      return t.BOOLEAN
     case 'number':
-      return new Type(numberType(value))
+      return numberType(value)
     case 'string':
-      return new Type(t.STRING)
+      return t.STRING
     case 'symbol':
-      return new Type(t.SYMBOL)
+      return t.SYMBOL
     case 'object':
-      return new Type(value === null ? t.NULL : binding.type(value))
+      return value === null ? t.NULL : binding.type(value)
     case 'function':
-      return new Type(binding.type(value))
+      return binding.type(value)
     case 'bigint':
-      return new Type(t.BIGINT)
+      return t.BIGINT
   }
 }
+
+module.exports = exports = function type(value) {
+  return new Type(of(value))
+}
+
+exports.of = of
+
+exports.constants = t
