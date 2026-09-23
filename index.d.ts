@@ -46,6 +46,7 @@ interface Type {
   isFunction(): boolean
   isAsyncFunction(): boolean
   isGeneratorFunction(): boolean
+  isAsyncGeneratorFunction(): boolean
   isExternal(): boolean
   isBigInt(): boolean
 }
@@ -92,6 +93,7 @@ interface Constants {
   readonly BIGINT_OBJECT: number
   readonly ASYNC_FUNCTION: number
   readonly GENERATOR_FUNCTION: number
+  readonly ASYNC_GENERATOR_FUNCTION: number
   readonly INT8ARRAY: number
   readonly UINT8ARRAY: number
   readonly UINT8CLAMPEDARRAY: number

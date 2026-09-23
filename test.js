@@ -182,12 +182,20 @@ test('function', (t) => {
   t.ok(type(function* () {}).isFunction(), 'function*(){} is function')
   t.ok(type(function* () {}).isGeneratorFunction(), 'function*(){} is generator function')
   t.absent(type(function* () {}).isAsyncFunction(), 'function*(){} is not async function')
+  t.absent(
+    type(function* () {}).isAsyncGeneratorFunction(),
+    'function*(){} is not async generator function'
+  )
 
   t.ok(type(async function () {}).isFunction(), 'async function(){} is function')
   t.ok(type(async function () {}).isAsyncFunction(), 'async function(){} is async function')
   t.absent(
     type(async function () {}).isGeneratorFunction(),
     'async function(){} is not generator function'
+  )
+  t.absent(
+    type(async function () {}).isAsyncGeneratorFunction(),
+    'async function(){} is not async generator function'
   )
 
   t.ok(type(async () => {}).isFunction(), 'async ()=>{} is function')
@@ -199,6 +207,10 @@ test('function', (t) => {
   t.ok(
     type(async function* () {}).isGeneratorFunction(),
     'async function*(){} is generator function'
+  )
+  t.ok(
+    type(async function* () {}).isAsyncGeneratorFunction(),
+    'async function*(){} is async generator function'
   )
 })
 
@@ -228,6 +240,11 @@ test('of', (t) => {
   t.is(type.of(new ArrayBuffer(0)), c.ARRAYBUFFER, 'arraybuffer')
   t.is(type.of(new DataView(new ArrayBuffer(0))), c.DATAVIEW, 'dataview')
   t.is(type.of(noop), c.FUNCTION, 'function')
+  t.is(
+    type.of(async function* () {}),
+    c.ASYNC_GENERATOR_FUNCTION,
+    'async generator function'
+  )
 
   t.is(type.of(0), c.INT32 | c.UINT32, 'number carries its flags')
   t.is(type.of(12.3), c.NUMBER, 'double is only a number')
