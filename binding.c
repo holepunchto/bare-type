@@ -62,6 +62,7 @@ typedef enum {
   // Function types
   bare_type_async_function = 1 << 8 | js_function,
   bare_type_generator_function = 1 << 9 | js_function,
+  bare_type_async_generator_function = bare_type_async_function | bare_type_generator_function,
 } bare_type_t;
 
 static inline uint32_t
@@ -281,6 +282,7 @@ bare_type_exports(js_env_t *env, js_value_t *exports) {
 
   V("ASYNC_FUNCTION", bare_type_async_function)
   V("GENERATOR_FUNCTION", bare_type_generator_function)
+  V("ASYNC_GENERATOR_FUNCTION", bare_type_async_generator_function)
 #undef V
 
   return exports;

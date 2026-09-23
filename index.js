@@ -195,6 +195,10 @@ class Type {
     return (this._type & (0xff | t.GENERATOR_FUNCTION)) === t.GENERATOR_FUNCTION
   }
 
+  isAsyncGeneratorFunction() {
+    return this._type === t.ASYNC_GENERATOR_FUNCTION
+  }
+
   isExternal() {
     return this._type === t.EXTERNAL
   }
