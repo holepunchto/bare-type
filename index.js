@@ -24,11 +24,11 @@ class Type {
   }
 
   isInt32() {
-    return (this._type & (0xff | t.INT32)) === (t.NUMBER | t.INT32)
+    return (this._type & (0xff | t.INT32)) === t.INT32
   }
 
   isUint32() {
-    return (this._type & (0xff | t.UINT32)) === (t.NUMBER | t.UINT32)
+    return (this._type & (0xff | t.UINT32)) === t.UINT32
   }
 
   isString() {
@@ -44,143 +44,143 @@ class Type {
   }
 
   isArray() {
-    return this._type === (t.OBJECT | t.ARRAY)
+    return this._type === t.ARRAY
   }
 
   isArguments() {
-    return this._type === (t.OBJECT | t.ARGUMENTS)
+    return this._type === t.ARGUMENTS
   }
 
   isDate() {
-    return this._type === (t.OBJECT | t.DATE)
+    return this._type === t.DATE
   }
 
   isRegExp() {
-    return this._type === (t.OBJECT | t.REGEXP)
+    return this._type === t.REGEXP
   }
 
   isError() {
-    return this._type === (t.OBJECT | t.ERROR)
+    return this._type === t.ERROR
   }
 
   isPromise() {
-    return this._type === (t.OBJECT | t.PROMISE)
+    return this._type === t.PROMISE
   }
 
   isProxy() {
-    return this._type === (t.OBJECT | t.PROXY)
+    return this._type === t.PROXY
   }
 
   isGenerator() {
-    return this._type === (t.OBJECT | t.GENERATOR)
+    return this._type === t.GENERATOR
   }
 
   isMap() {
-    return this._type === (t.OBJECT | t.MAP)
+    return this._type === t.MAP
   }
 
   isSet() {
-    return this._type === (t.OBJECT | t.SET)
+    return this._type === t.SET
   }
 
   isWeakMap() {
-    return this._type === (t.OBJECT | t.WEAK_MAP)
+    return this._type === t.WEAK_MAP
   }
 
   isWeakSet() {
-    return this._type === (t.OBJECT | t.WEAK_SET)
+    return this._type === t.WEAK_SET
   }
 
   isWeakRef() {
-    return this._type === (t.OBJECT | t.WEAK_REF)
+    return this._type === t.WEAK_REF
   }
 
   isArrayBuffer() {
-    return this._type === (t.OBJECT | t.ARRAYBUFFER)
+    return this._type === t.ARRAYBUFFER
   }
 
   isSharedArrayBuffer() {
-    return this._type === (t.OBJECT | t.SHAREDARRAYBUFFER)
+    return this._type === t.SHAREDARRAYBUFFER
   }
 
   isTypedArray() {
-    return (this._type & 0xffff) === (t.OBJECT | t.TYPEDARRAY)
+    return (this._type & 0xffff) === t.TYPEDARRAY
   }
 
   isInt8Array() {
-    return this._type === (t.OBJECT | t.TYPEDARRAY | t.INT8ARRAY)
+    return this._type === t.INT8ARRAY
   }
 
   isUint8Array() {
-    return this._type === (t.OBJECT | t.TYPEDARRAY | t.UINT8ARRAY)
+    return this._type === t.UINT8ARRAY
   }
 
   isUint8ClampedArray() {
-    return this._type === (t.OBJECT | t.TYPEDARRAY | t.UINT8CLAMPEDARRAY)
+    return this._type === t.UINT8CLAMPEDARRAY
   }
 
   isInt16Array() {
-    return this._type === (t.OBJECT | t.TYPEDARRAY | t.INT16ARRAY)
+    return this._type === t.INT16ARRAY
   }
 
   isUint16Array() {
-    return this._type === (t.OBJECT | t.TYPEDARRAY | t.UINT16ARRAY)
+    return this._type === t.UINT16ARRAY
   }
 
   isInt32Array() {
-    return this._type === (t.OBJECT | t.TYPEDARRAY | t.INT32ARRAY)
+    return this._type === t.INT32ARRAY
   }
 
   isUint32Array() {
-    return this._type === (t.OBJECT | t.TYPEDARRAY | t.UINT32ARRAY)
+    return this._type === t.UINT32ARRAY
   }
 
   isFloat16Array() {
-    return this._type === (t.OBJECT | t.TYPEDARRAY | t.FLOAT16ARRAY)
+    return this._type === t.FLOAT16ARRAY
   }
 
   isFloat32Array() {
-    return this._type === (t.OBJECT | t.TYPEDARRAY | t.FLOAT32ARRAY)
+    return this._type === t.FLOAT32ARRAY
   }
 
   isFloat64Array() {
-    return this._type === (t.OBJECT | t.TYPEDARRAY | t.FLOAT64ARRAY)
+    return this._type === t.FLOAT64ARRAY
   }
 
   isBigInt64Array() {
-    return this._type === (t.OBJECT | t.TYPEDARRAY | t.BIGINT64ARRAY)
+    return this._type === t.BIGINT64ARRAY
   }
 
   isBigUint64Array() {
-    return this._type === (t.OBJECT | t.TYPEDARRAY | t.BIGUINT64ARRAY)
+    return this._type === t.BIGUINT64ARRAY
   }
 
   isDataView() {
-    return this._type === (t.OBJECT | t.DATAVIEW)
+    return this._type === t.DATAVIEW
   }
 
   isModuleNamespace() {
-    return this._type === (t.OBJECT | t.MODULE_NAMESPACE)
+    return this._type === t.MODULE_NAMESPACE
   }
 
   isBooleanObject() {
-    return this._type === (t.OBJECT | t.BOOLEAN_OBJECT)
+    return this._type === t.BOOLEAN_OBJECT
   }
 
   isNumberObject() {
-    return this._type === (t.OBJECT | t.NUMBER_OBJECT)
+    return this._type === t.NUMBER_OBJECT
   }
 
   isStringObject() {
-    return this._type === (t.OBJECT | t.STRING_OBJECT)
+    return this._type === t.STRING_OBJECT
   }
 
   isSymbolObject() {
-    return this._type === (t.OBJECT | t.SYMBOL_OBJECT)
+    return this._type === t.SYMBOL_OBJECT
   }
 
   isBigIntObject() {
-    return this._type === (t.OBJECT | t.BIGINT_OBJECT)
+    return this._type === t.BIGINT_OBJECT
   }
 
   isFunction() {
@@ -188,11 +188,11 @@ class Type {
   }
 
   isAsyncFunction() {
-    return (this._type & (0xff | t.ASYNC_FUNCTION)) === (t.FUNCTION | t.ASYNC_FUNCTION)
+    return (this._type & (0xff | t.ASYNC_FUNCTION)) === t.ASYNC_FUNCTION
   }
 
   isGeneratorFunction() {
-    return (this._type & (0xff | t.GENERATOR_FUNCTION)) === (t.FUNCTION | t.GENERATOR_FUNCTION)
+    return (this._type & (0xff | t.GENERATOR_FUNCTION)) === t.GENERATOR_FUNCTION
   }
 
   isExternal() {

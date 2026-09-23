@@ -17,8 +17,8 @@ typedef enum {
   bare_type_bigint = js_bigint,
 
   // Number types
-  bare_type_int32 = 1 << 8,
-  bare_type_uint32 = 1 << 9,
+  bare_type_int32 = 1 << 8 | js_number,
+  bare_type_uint32 = 1 << 9 | js_number,
 
   // Object types
   bare_type_array = js_array,
@@ -46,22 +46,22 @@ typedef enum {
   bare_type_bigint_object = js_bigint_object,
 
   // TypedArray types
-  bare_type_int8array = 1 << 16,
-  bare_type_uint8array = 2 << 16,
-  bare_type_uint8clampedarray = 3 << 16,
-  bare_type_int16array = 4 << 16,
-  bare_type_uint16array = 5 << 16,
-  bare_type_int32array = 6 << 16,
-  bare_type_uint32array = 7 << 16,
-  bare_type_float16array = 12 << 16,
-  bare_type_float32array = 8 << 16,
-  bare_type_float64array = 9 << 16,
-  bare_type_bigint64array = 10 << 16,
-  bare_type_biguint64array = 11 << 16,
+  bare_type_int8array = 1 << 16 | js_typedarray,
+  bare_type_uint8array = 2 << 16 | js_typedarray,
+  bare_type_uint8clampedarray = 3 << 16 | js_typedarray,
+  bare_type_int16array = 4 << 16 | js_typedarray,
+  bare_type_uint16array = 5 << 16 | js_typedarray,
+  bare_type_int32array = 6 << 16 | js_typedarray,
+  bare_type_uint32array = 7 << 16 | js_typedarray,
+  bare_type_float16array = 12 << 16 | js_typedarray,
+  bare_type_float32array = 8 << 16 | js_typedarray,
+  bare_type_float64array = 9 << 16 | js_typedarray,
+  bare_type_bigint64array = 10 << 16 | js_typedarray,
+  bare_type_biguint64array = 11 << 16 | js_typedarray,
 
   // Function types
-  bare_type_async_function = 1 << 8,
-  bare_type_generator_function = 1 << 9,
+  bare_type_async_function = 1 << 8 | js_function,
+  bare_type_generator_function = 1 << 9 | js_function,
 } bare_type_t;
 
 static inline uint32_t
@@ -113,47 +113,47 @@ bare_type_classify(js_env_t *env, js_value_t *value) {
   }
   }
 
-  if (type == (bare_type_object | bare_type_typedarray)) {
+  if (type == bare_type_typedarray) {
     js_typedarray_type_t element = (js_typedarray_type_t) -1;
     err = js_get_typedarray_info(env, value, &element, NULL, NULL, NULL, NULL);
     assert(err == 0);
 
     switch (element) {
     case js_int8array:
-      type |= bare_type_int8array;
+      type = bare_type_int8array;
       break;
     case js_uint8array:
-      type |= bare_type_uint8array;
+      type = bare_type_uint8array;
       break;
     case js_uint8clampedarray:
-      type |= bare_type_uint8clampedarray;
+      type = bare_type_uint8clampedarray;
       break;
     case js_int16array:
-      type |= bare_type_int16array;
+      type = bare_type_int16array;
       break;
     case js_uint16array:
-      type |= bare_type_uint16array;
+      type = bare_type_uint16array;
       break;
     case js_int32array:
-      type |= bare_type_int32array;
+      type = bare_type_int32array;
       break;
     case js_uint32array:
-      type |= bare_type_uint32array;
+      type = bare_type_uint32array;
       break;
     case js_float16array:
-      type |= bare_type_float16array;
+      type = bare_type_float16array;
       break;
     case js_float32array:
-      type |= bare_type_float32array;
+      type = bare_type_float32array;
       break;
     case js_float64array:
-      type |= bare_type_float64array;
+      type = bare_type_float64array;
       break;
     case js_bigint64array:
-      type |= bare_type_bigint64array;
+      type = bare_type_bigint64array;
       break;
     case js_biguint64array:
-      type |= bare_type_biguint64array;
+      type = bare_type_biguint64array;
       break;
     default:
       break;
