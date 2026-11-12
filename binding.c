@@ -45,6 +45,9 @@ typedef enum {
   bare_type_symbol_object = js_symbol_object,
   bare_type_bigint_object = js_bigint_object,
 
+  // ArrayBuffer types
+  bare_type_non_detachable_arraybuffer = 1 << 16 | js_arraybuffer,
+
   // TypedArray types
   bare_type_int8array = 1 << 16 | js_typedarray,
   bare_type_uint8array = 2 << 16 | js_typedarray,
@@ -96,6 +99,15 @@ bare_type_classify(js_env_t *env, js_value_t *value) {
     assert(err == 0);
 
     type = object;
+
+    if (type == bare_type_arraybuffer) {
+      bool is_detachable;
+      err = js_is_detachable_arraybuffer(env, value, &is_detachable);
+      assert(err == 0);
+
+      if (!is_detachable) type = bare_type_non_detachable_arraybuffer;
+    }
+
     break;
   }
 
@@ -266,6 +278,8 @@ bare_type_exports(js_env_t *env, js_value_t *exports) {
   V("STRING_OBJECT", bare_type_string_object)
   V("SYMBOL_OBJECT", bare_type_symbol_object)
   V("BIGINT_OBJECT", bare_type_bigint_object)
+
+  V("NON_DETACHABLE_ARRAYBUFFER", bare_type_non_detachable_arraybuffer)
 
   V("INT8ARRAY", bare_type_int8array)
   V("UINT8ARRAY", bare_type_uint8array)

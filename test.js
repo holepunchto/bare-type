@@ -120,6 +120,12 @@ test('weak ref', (t) => {
 test('arraybuffer', (t) => {
   t.ok(type(new ArrayBuffer(16)).isObject(), 'ArrayBuffer() is object')
   t.ok(type(new ArrayBuffer(16)).isArrayBuffer(), 'ArrayBuffer() is arraybuffer')
+  t.ok(type(new ArrayBuffer(16)).isDetachableArrayBuffer(), 'ArrayBuffer() is detachable')
+
+  const memory = new WebAssembly.Memory({ initial: 1 })
+
+  t.ok(type(memory.buffer).isArrayBuffer(), 'WebAssembly memory is arraybuffer')
+  t.absent(type(memory.buffer).isDetachableArrayBuffer(), 'WebAssembly memory is not detachable')
 })
 
 test('sharedarraybuffer', (t) => {
@@ -238,6 +244,11 @@ test('of', (t) => {
   t.is(type.of(new Map()), c.MAP, 'map')
   t.is(type.of(new Set()), c.SET, 'set')
   t.is(type.of(new ArrayBuffer(0)), c.ARRAYBUFFER, 'arraybuffer')
+  t.is(
+    type.of(new WebAssembly.Memory({ initial: 1 }).buffer),
+    c.NON_DETACHABLE_ARRAYBUFFER,
+    'non-detachable arraybuffer'
+  )
   t.is(type.of(new DataView(new ArrayBuffer(0))), c.DATAVIEW, 'dataview')
   t.is(type.of(noop), c.FUNCTION, 'function')
   t.is(

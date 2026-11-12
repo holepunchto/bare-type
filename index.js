@@ -96,6 +96,10 @@ class Type {
   }
 
   isArrayBuffer() {
+    return (this._type & 0xffff) === t.ARRAYBUFFER
+  }
+
+  isDetachableArrayBuffer() {
     return this._type === t.ARRAYBUFFER
   }
 
