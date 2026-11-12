@@ -18,6 +18,8 @@ interface Type {
   isGenerator(): boolean
   isMap(): boolean
   isSet(): boolean
+  isMapIterator(): boolean
+  isSetIterator(): boolean
   isWeakMap(): boolean
   isWeakSet(): boolean
   isWeakRef(): boolean
@@ -79,6 +81,8 @@ interface Constants {
   readonly GENERATOR: number
   readonly MAP: number
   readonly SET: number
+  readonly MAP_ITERATOR: number
+  readonly SET_ITERATOR: number
   readonly WEAK_MAP: number
   readonly WEAK_SET: number
   readonly WEAK_REF: number

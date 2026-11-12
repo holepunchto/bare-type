@@ -102,6 +102,19 @@ test('set', (t) => {
   t.ok(type(new Set()).isSet(), 'Set() is set')
 })
 
+test('map iterator', (t) => {
+  t.ok(type(new Map().entries()).isObject(), 'Map().entries() is object')
+  t.ok(type(new Map().entries()).isMapIterator(), 'Map().entries() is map iterator')
+  t.absent(type(new Set().entries()).isMapIterator(), 'Set().entries() is not map iterator')
+  t.absent(type([].entries()).isMapIterator(), '[].entries() is not map iterator')
+})
+
+test('set iterator', (t) => {
+  t.ok(type(new Set().values()).isObject(), 'Set().values() is object')
+  t.ok(type(new Set().values()).isSetIterator(), 'Set().values() is set iterator')
+  t.absent(type(new Map().keys()).isSetIterator(), 'Map().keys() is not set iterator')
+})
+
 test('weak map', (t) => {
   t.ok(type(new WeakMap()).isObject(), 'WeakMap() is object')
   t.ok(type(new WeakMap()).isWeakMap(), 'WeakMap() is weak map')
@@ -243,6 +256,8 @@ test('of', (t) => {
   t.is(type.of(/a/), c.REGEXP, 'regexp')
   t.is(type.of(new Map()), c.MAP, 'map')
   t.is(type.of(new Set()), c.SET, 'set')
+  t.is(type.of(new Map().keys()), c.MAP_ITERATOR, 'map iterator')
+  t.is(type.of(new Set().keys()), c.SET_ITERATOR, 'set iterator')
   t.is(type.of(new ArrayBuffer(0)), c.ARRAYBUFFER, 'arraybuffer')
   t.is(
     type.of(new WebAssembly.Memory({ initial: 1 }).buffer),

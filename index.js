@@ -83,6 +83,14 @@ class Type {
     return this._type === t.SET
   }
 
+  isMapIterator() {
+    return this._type === t.MAP_ITERATOR
+  }
+
+  isSetIterator() {
+    return this._type === t.SET_ITERATOR
+  }
+
   isWeakMap() {
     return this._type === t.WEAK_MAP
   }
