@@ -22,6 +22,7 @@ interface Type {
   isWeakSet(): boolean
   isWeakRef(): boolean
   isArrayBuffer(): boolean
+  isDetachableArrayBuffer(): boolean
   isSharedArrayBuffer(): boolean
   isTypedArray(): boolean
   isInt8Array(): boolean
@@ -91,6 +92,7 @@ interface Constants {
   readonly STRING_OBJECT: number
   readonly SYMBOL_OBJECT: number
   readonly BIGINT_OBJECT: number
+  readonly NON_DETACHABLE_ARRAYBUFFER: number
   readonly ASYNC_FUNCTION: number
   readonly GENERATOR_FUNCTION: number
   readonly ASYNC_GENERATOR_FUNCTION: number
