@@ -31,6 +31,8 @@ typedef enum {
   bare_type_generator = js_generator,
   bare_type_map = js_map,
   bare_type_set = js_set,
+  bare_type_map_iterator = js_map_iterator,
+  bare_type_set_iterator = js_set_iterator,
   bare_type_weak_map = js_weak_map,
   bare_type_weak_set = js_weak_set,
   bare_type_weak_ref = js_weak_ref,
@@ -265,6 +267,8 @@ bare_type_exports(js_env_t *env, js_value_t *exports) {
   V("GENERATOR", bare_type_generator)
   V("MAP", bare_type_map)
   V("SET", bare_type_set)
+  V("MAP_ITERATOR", bare_type_map_iterator)
+  V("SET_ITERATOR", bare_type_set_iterator)
   V("WEAK_MAP", bare_type_weak_map)
   V("WEAK_SET", bare_type_weak_set)
   V("WEAK_REF", bare_type_weak_ref)
